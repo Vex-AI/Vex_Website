@@ -17,6 +17,7 @@ import Loader from "../components/Loader";
 import Login from "../components/Login";
 
 import { Download as DownloadIcon } from "@mui/icons-material";
+
 const theme = createTheme({
   palette: {
     mode: "dark",
@@ -51,6 +52,7 @@ const Home: React.FC = () => {
   const openUrl = (url: string) => {
     window.open(url, "_blank");
   };
+
   useEffect(() => {
     fetch("https://api.github.com/repos/vex-ai/vexai/contributors")
       .then((response) => response.json())
@@ -62,22 +64,11 @@ const Home: React.FC = () => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Header />
-      <Box
-        sx={{ backgroundColor: "#212121", py: 8, px: 4, paddingBottom: "3rem" }}
-      >
+      <Box sx={{ backgroundColor: "#212121", py: 8, px: 4, paddingBottom: "3rem" }}>
         <Grid container spacing={2} justifyContent="center" alignItems="center">
           <Grid item xs={12} sm={6} md={4}>
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <Typography
-                variant="h4"
-                align="center"
-                gutterBottom
-                sx={{ color: "#fff" }}
-              >
+            <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+              <Typography variant="h4" align="center" gutterBottom sx={{ color: "#fff" }}>
                 <img
                   src="https://github.com/Vex-AI/VexAI/raw/main/public/Vex_320.png"
                   alt="VexAI"
@@ -85,25 +76,12 @@ const Home: React.FC = () => {
                 />
               </Typography>
             </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              <Typography
-                variant="h4"
-                align="center"
-                gutterBottom
-                sx={{ color: "#fff" }}
-              >
+            <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }}>
+              <Typography variant="h4" align="center" gutterBottom sx={{ color: "#fff" }}>
                 ABOUT PROJECT
               </Typography>
             </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-            >
+            <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.4 }}>
               <Typography
                 variant="body1"
                 align="center"
@@ -122,11 +100,7 @@ const Home: React.FC = () => {
                 (⊙_⊙)
               </Typography>
             </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.6 }}
-            >
+            <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.6 }}>
               <Button
                 onClick={() => {
                   openUrl("https://vexai.netlify.app/");
@@ -165,11 +139,12 @@ const Home: React.FC = () => {
             </Typography>
             <List
               sx={{
-                display: "flex",
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+                gap: "1rem",
                 justifyContent: "center",
                 alignItems: "center",
-                flexDirection: "column ",
-                minWidth: "100%",
+                marginTop: "1rem",
               }}
             >
               {developers.length > 0 ? (
