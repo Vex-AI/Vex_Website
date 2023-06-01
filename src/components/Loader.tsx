@@ -39,7 +39,7 @@ import {
 
 interface LoaderProps {
   color?: string;
-  size?: number
+  size?: number;
 }
 
 const loaders = [
@@ -80,11 +80,26 @@ const loaders = [
   SyncLoader,
 ];
 
-const Loader: React.FC<LoaderProps> = ({ color = "white" , size = 50}) => {
+const Loader: React.FC<LoaderProps> = ({ color = "white", size = 40 }) => {
   const randomIndex = Math.floor(Math.random() * loaders.length);
   const LoaderComponent = loaders[randomIndex];
 
-  return <LoaderComponent style={{ margin: "auto" }} size={size} color={color} />;
+  return (
+    <div
+      style={{
+        width: "100%",
+        padding:0,
+        margin:0,
+        height:"auto",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        
+      }}
+    >
+      <LoaderComponent style={{ margin: "auto" }} size={size} color={color} />
+    </div>
+  );
 };
 
 export default Loader;

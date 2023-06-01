@@ -49,3 +49,13 @@ outline: 4px auto -webkit-focus-ring-color;
   user-select: none;
   transition: all 0.8s ease-in-out;
 }
+p,
+h1,
+h2,
+h4,
+h4,
+h5,
+h6,
+h7 {
+  color: white;
+}

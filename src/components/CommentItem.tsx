@@ -9,7 +9,7 @@ import {
   Divider,
 } from "@mui/material";
 import { styled } from "@mui/system";
-
+import { motion } from "framer-motion";
 interface CommentData {
   name: string;
   profile: string;
@@ -17,6 +17,7 @@ interface CommentData {
   stars: number;
   content: string;
   uid: string;
+  index: number;
 }
 
 interface CommentProps {
@@ -41,7 +42,11 @@ const CommentItem: React.FC<CommentProps> = ({ comment }) => {
   const year: string = String(date.getFullYear());
 
   return (
-    <div>
+    <motion.div
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: 0.2*comment.index }}
+    >
       <Container>
         <ListItem>
           <ListItemAvatar>
@@ -58,7 +63,7 @@ const CommentItem: React.FC<CommentProps> = ({ comment }) => {
         </ListItem>
       </Container>
       <Divider />
-    </div>
+    </motion.div>
   );
 };
 

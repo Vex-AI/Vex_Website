@@ -1,4 +1,4 @@
-import { useState, useEffect, ChangeEvent, useContext } from "react";
+import { useState, useEffect, ChangeEvent, useContext,lazy, Suspense } from "react";
 import SendIcon from "@mui/icons-material/Send";
 import {
   Box,
@@ -11,7 +11,7 @@ import {
 import { reference } from "../classes/firebase";
 import { DataSnapshot, onValue, off, push, set } from "firebase/database";
 import { UserContext } from "./UserContext";
-import Loader from "./Loader";
+const Loader = lazy(() => import("./Loader"));
 import { v4 } from "uuid";
 import CommentItem from "./CommentItem";
 
@@ -88,9 +88,9 @@ const CommentList: React.FC = () => {
 
   return (
     <Box sx={{ margin: "0 16px" }}>
-      <List>
-        {submittedComments ? (
-          submittedComments.map((comment: CommentData) => (
+      <Suspense fallback={<Loader />}>
+        <List>
+          {submittedComments.map((comment: CommentData, index: number) => (
             <CommentItem
               key={comment.uid}
               comment={{
@@ -100,13 +100,12 @@ const CommentList: React.FC = () => {
                 stars: comment.stars,
                 content: comment.content,
                 uid: comment.uid,
+                index,
               }}
             />
-          ))
-        ) : (
-          <Loader />
-        )}
-      </List>
+          ))}
+        </List>
+      </Suspense>
       {user && (
         <Box sx={{ mt: 4, padding: "1rem" }}>
           <Typography variant="h6" gutterBottom>

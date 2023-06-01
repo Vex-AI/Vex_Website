@@ -1,4 +1,11 @@
-import { useState, useEffect } from "react";
+import {
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+  lazy,
+  Suspense,
+} from "react";
 import {
   Box,
   Grid,
@@ -15,7 +22,7 @@ import Card from "../components/Card";
 import CommentList from "../components/CommentList";
 import Footer from "../components/Footer";
 import Loader from "../components/Loader";
-import Login from "../components/Login";
+const Login = lazy(() => import("../components/Login"));
 
 import { Download as DownloadIcon } from "@mui/icons-material";
 
@@ -49,10 +56,10 @@ interface Dev {
 
 const Home: React.FC = () => {
   const [developers, setDevelopers] = useState<Dev[]>([]);
-
-  const openUrl = (url: string) => {
+  console.log(0);
+  const openUrl = useCallback((url: string) => {
     window.open(url, "_blank");
-  };
+  }, []);
 
   useEffect(() => {
     fetch("https://api.github.com/repos/vex-ai/vexai/contributors")
@@ -61,15 +68,41 @@ const Home: React.FC = () => {
       .catch((error) => console.log(error));
   }, []);
 
+  const renderDevelopers = useMemo(() => {
+    if (developers.length > 0) {
+      return developers.map((developer) => (
+        <Card
+          key={developer.id}
+          name={developer.login}
+          avatarUrl={developer.avatar_url}
+          githubUrl={developer.html_url}
+        />
+      ));
+    } else {
+      return <Loader />;
+    }
+  }, [developers]);
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Header />
-      <Box sx={{ backgroundColor: "#212121", py: 8, px: 4, paddingBottom: "3rem" }}>
+      <Box
+        sx={{ backgroundColor: "#212121", py: 8, px: 4, paddingBottom: "3rem" }}
+      >
         <Grid container spacing={2} justifyContent="center" alignItems="center">
           <Grid item xs={12} sm={6} md={4}>
-            <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-              <Typography variant="h4" align="center" gutterBottom sx={{ color: "#fff" }}>
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <Typography
+                variant="h4"
+                align="center"
+                gutterBottom
+                
+              >
                 <img
                   src="https://github.com/Vex-AI/VexAI/raw/main/public/Vex_320.png"
                   alt="VexAI"
@@ -77,18 +110,31 @@ const Home: React.FC = () => {
                 />
               </Typography>
             </motion.div>
-            <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }}>
-              <Typography variant="h4" align="center" gutterBottom sx={{ color: "#fff" }}>
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              <Typography
+                variant="h4"
+                align="center"
+                gutterBottom
+                
+              >
                 ABOUT PROJECT
               </Typography>
             </motion.div>
-            <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.4 }}>
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+            >
               <Typography
                 variant="body1"
                 align="center"
                 textAlign="justify"
                 gutterBottom
-                sx={{ color: "#fff" }}
+                
               >
                 This is an AI I've been building since 2019. It was an Android
                 app made in Java. I had a lot of problems implementing features,
@@ -101,7 +147,11 @@ const Home: React.FC = () => {
                 (⊙_⊙)
               </Typography>
             </motion.div>
-            <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.6 }}>
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+            >
               <Button
                 onClick={() => {
                   openUrl("https://vexai.netlify.app/");
@@ -129,12 +179,12 @@ const Home: React.FC = () => {
             </motion.div>
           </Grid>
 
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid sx={{ margin: "0 2rem" }} item xs={12} sm={6} md={4}>
             <Typography
               variant="h5"
               align="center"
               gutterBottom
-              sx={{ color: "#fff", mt: 2, marginTop: "2rem" }}
+              sx={{  mt: 2, marginTop: "2rem" }}
             >
               Developers & Contributors
             </Typography>
@@ -148,30 +198,28 @@ const Home: React.FC = () => {
                 marginTop: "1rem",
               }}
             >
-              {developers.length > 0 ? (
-                developers.map((developer) => (
-                  <Card
-                    key={developer.id}
-                    name={developer.login}
-                    avatarUrl={developer.avatar_url}
-                    githubUrl={developer.html_url}
-                  />
-                ))
-              ) : (
-                <Loader />
-              )}
+              {renderDevelopers}
             </List>
           </Grid>
         </Grid>
       </Box>
       <Box sx={{ mt: 4, padding: "3rem 0" }}>
-        <Typography variant="h5" align="center" gutterBottom>
+        <Typography
+          
+          variant="h5"
+          align="center"
+          gutterBottom
+        >
           Comments
         </Typography>
+        <Suspense fallback={<Loader />}>
         <CommentList />
-        <Login />
+        </Suspense>
+        <Suspense fallback={<Loader />}>
+          <Login />
+        </Suspense>
       </Box>
-      <Footer/>
+      <Footer />
     </ThemeProvider>
   );
 };
