@@ -13,6 +13,7 @@ import { motion } from "framer-motion";
 import Header from "../components/Header";
 import Card from "../components/Card";
 import CommentList from "../components/CommentList";
+import Footer from "../components/Footer";
 import Loader from "../components/Loader";
 import Login from "../components/Login";
 
@@ -170,6 +171,7 @@ const Home: React.FC = () => {
         <CommentList />
         <Login />
       </Box>
+      <Footer/>
     </ThemeProvider>
   );
 };
