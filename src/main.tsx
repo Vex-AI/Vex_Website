@@ -7,16 +7,15 @@ import Home from "./screens/Home";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import "./classes/translation";
 import { UserProvider } from "./components/UserContext";
-const theme = createTheme({
-  
-});
+const theme = createTheme({});
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <UserProvider>
         <Browser>
           <Routes>
-            <Route path="/:locale" element={<Home />} />
+            <Route path="/" element={<Home />} />
+               <Route path="/:locale" element={<Home />} />
           </Routes>
         </Browser>
       </UserProvider>

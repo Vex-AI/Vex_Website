@@ -54,11 +54,10 @@ interface Dev {
   site_admin: boolean;
   contributions: number;
 }
-
+import i18n from "../classes/translation";
 const Home: React.FC = () => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const { locale } = useParams<{ locale: string }>();
-
   const [developers, setDevelopers] = useState<Dev[]>([]);
 
   const openUrl = useCallback((url: string) => {
@@ -66,7 +65,9 @@ const Home: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (locale && i18n.exists(locale)) i18n.changeLanguage(locale);
+
+      i18n.changeLanguage(locale);
+    
   }, []);
 
   useEffect(() => {
@@ -96,7 +97,12 @@ const Home: React.FC = () => {
       <CssBaseline />
       <Header />
       <Box
-        sx={{ backgroundColor: "#212121", py: 8, px: 4, paddingBottom: "3rem" }}
+        sx={{
+          backgroundColor: "#212121",
+          py: 8,
+          px: 4,
+          paddingBottom: "3rem",
+        }}
       >
         <Grid container spacing={2} justifyContent="center" alignItems="center">
           <Grid item xs={12} sm={6} md={4}>
