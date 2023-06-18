@@ -1,9 +1,10 @@
 import { useState, useEffect, memo } from "react";
 import { Box, Typography, Avatar, Link } from "@mui/material";
 import { motion } from "framer-motion";
-
+import { useTranslation } from "react-i18next";
 const Footer = () => {
   const [userData, setUserData] = useState(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     fetch("https://api.github.com/users/cookieukw")
@@ -34,7 +35,7 @@ const Footer = () => {
         >
           <Avatar src={avatar_url} alt={name} sx={{ marginRight: 2 }} />
           <Typography variant="body1" sx={{ color: "#fff" }}>
-            Developed by{" "}
+            {t("developedBy")}
             <Link
               href={html_url}
               target="_blank"
@@ -54,7 +55,7 @@ const Footer = () => {
           }}
         >
           <Typography variant="body2" sx={{ color: "#fff" }}>
-            © {new Date().getFullYear()} All rights reserved.
+            © {new Date().getFullYear()} {t("allRights")}
           </Typography>
         </Box>
       </Box>

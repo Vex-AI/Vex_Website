@@ -1,4 +1,5 @@
 import { useContext, memo, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Button,
   Paper,
@@ -14,6 +15,7 @@ import { motion } from "framer-motion";
 import { UserContext } from "../components/UserContext";
 
 const Login: React.FC = () => {
+  const { t } = useTranslation();
   const loginTheme = useMemo(() => {
     return createTheme({
       palette: {
@@ -26,7 +28,7 @@ const Login: React.FC = () => {
         },
       },
     });
-  },[]);
+  }, []);
   const { signInGoogle } = useContext(UserContext);
 
   return (
@@ -57,7 +59,7 @@ const Login: React.FC = () => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography variant="h5" component="h1" align="center" gutterBottom>
-            Log in to comment
+            {t("loginToComment")}
           </Typography>
           <Button
             onClick={signInGoogle}
@@ -65,7 +67,7 @@ const Login: React.FC = () => {
             variant="contained"
             color="primary"
           >
-            ENTER
+            {t("enter")}
           </Button>
         </Paper>
       </motion.div>

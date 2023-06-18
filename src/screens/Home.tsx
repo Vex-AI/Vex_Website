@@ -23,8 +23,9 @@ import CommentList from "../components/CommentList";
 import Footer from "../components/Footer";
 import Loader from "../components/Loader";
 const Login = lazy(() => import("../components/Login"));
-
 import { Download as DownloadIcon } from "@mui/icons-material";
+import { useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const theme = createTheme({
   palette: {
@@ -55,10 +56,17 @@ interface Dev {
 }
 
 const Home: React.FC = () => {
+  const { t, i18n } = useTranslation();
+  const { locale } = useParams<{ locale: string }>();
+
   const [developers, setDevelopers] = useState<Dev[]>([]);
-  console.log(0);
+
   const openUrl = useCallback((url: string) => {
     window.open(url, "_blank");
+  }, []);
+
+  useEffect(() => {
+    if (locale && i18n.exists(locale)) i18n.changeLanguage(locale);
   }, []);
 
   useEffect(() => {
@@ -97,12 +105,7 @@ const Home: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <Typography
-                variant="h4"
-                align="center"
-                gutterBottom
-                
-              >
+              <Typography variant="h4" align="center" gutterBottom>
                 <img
                   src="https://github.com/Vex-AI/VexAI/raw/main/public/Vex_320.png"
                   alt="VexAI"
@@ -115,13 +118,8 @@ const Home: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <Typography
-                variant="h4"
-                align="center"
-                gutterBottom
-                
-              >
-                ABOUT PROJECT
+              <Typography variant="h4" align="center" gutterBottom>
+                {t("aboutProject")}
               </Typography>
             </motion.div>
             <motion.div
@@ -134,17 +132,8 @@ const Home: React.FC = () => {
                 align="center"
                 textAlign="justify"
                 gutterBottom
-                
               >
-                This is an AI I've been building since 2019. It was an Android
-                app made in Java. I had a lot of problems implementing features,
-                mainly machine learning and problems with the play store (it
-                took time to grow, politics and such). So one day I decided to
-                create a version with React and NodeJS (so it's still under
-                construction), with the aim of creating an AI capable of having
-                a normal conversation with a person and talking about games and
-                various subjects... and who knows... becoming a conscious AI
-                (⊙_⊙)
+                {t("description")}
               </Typography>
             </motion.div>
             <motion.div
@@ -162,7 +151,7 @@ const Home: React.FC = () => {
                 fullWidth
                 sx={{ my: 2 }}
               >
-                Visit online version
+                {t("visitOnlineVersion")}
               </Button>
               <Button
                 onClick={() => {
@@ -174,7 +163,7 @@ const Home: React.FC = () => {
                 fullWidth
                 sx={{ my: 2 }}
               >
-                DOWNLOAD APP
+                {t("downloadApp")}
               </Button>
             </motion.div>
           </Grid>
@@ -184,9 +173,9 @@ const Home: React.FC = () => {
               variant="h5"
               align="center"
               gutterBottom
-              sx={{  mt: 2, marginTop: "2rem" }}
+              sx={{ mt: 2, marginTop: "2rem" }}
             >
-              Developers & Contributors
+              {t("developersContributors")}
             </Typography>
             <List
               sx={{
@@ -204,16 +193,11 @@ const Home: React.FC = () => {
         </Grid>
       </Box>
       <Box sx={{ mt: 4, padding: "3rem 0" }}>
-        <Typography
-          
-          variant="h5"
-          align="center"
-          gutterBottom
-        >
-          Comments
+        <Typography variant="h5" align="center" gutterBottom>
+          {t("comments")}
         </Typography>
         <Suspense fallback={<Loader />}>
-        <CommentList />
+          <CommentList />
         </Suspense>
         <Suspense fallback={<Loader />}>
           <Login />
