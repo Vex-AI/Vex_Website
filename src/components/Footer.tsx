@@ -28,12 +28,15 @@ const Footer = () => {
       <Box sx={{ backgroundColor: "#212121", py: 4, px: 2 }}>
         <Box
           sx={{
-            display: "flex",
+            display: "display",
             alignItems: "center",
             justifyContent: "center",
           }}
         >
-          <Avatar src={avatar_url} alt={name} sx={{ marginRight: 2 }} />
+          <Avatar
+          src={avatar_url}
+          alt={name} 
+          sx={{ marginRight: 2 }} />
           <Typography variant="body1" sx={{ color: "#fff" }}>
             {t("developedBy")}
             <Link

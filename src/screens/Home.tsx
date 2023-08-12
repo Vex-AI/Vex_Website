@@ -65,9 +65,8 @@ const Home: React.FC = () => {
   }, []);
 
   useEffect(() => {
-
-      i18n.changeLanguage(locale);
-    
+    i18n.changeLanguage(locale);
+    (window.adsbygoogle = window.adsbygoogle || []).push({});
   }, []);
 
   useEffect(() => {
@@ -186,7 +185,7 @@ const Home: React.FC = () => {
             <List
               sx={{
                 display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+               gridTemplateColumns: "repeat(auto-fit, minmax(50px, 1fr))",
                 gap: "1rem",
                 justifyContent: "center",
                 alignItems: "center",
@@ -209,6 +208,16 @@ const Home: React.FC = () => {
           <Login />
         </Suspense>
       </Box>
+
+      <ins
+        className="adsbygoogle"
+        style={{ backgroundColor: "red" }}
+        data-ad-client="ca-pub-3239733554197124"
+        data-ad-slot="3045264184"
+        data-ad-format="auto"
+        data-adtest="on"
+        data-full-width-responsive="true"
+      ></ins>
       <Footer />
     </ThemeProvider>
   );
