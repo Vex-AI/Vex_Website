@@ -5,7 +5,8 @@ import {
   useMemo,
   lazy,
   Suspense,
-} from "react";
+} from "react"; 
+
 import {
   Box,
   Grid,
@@ -66,6 +67,7 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     i18n.changeLanguage(locale);
+    // @ts-ignore
     (window.adsbygoogle = window.adsbygoogle || []).push({});
   }, []);
 
@@ -173,7 +175,7 @@ const Home: React.FC = () => {
             </motion.div>
           </Grid>
 
-          <Grid sx={{ margin: "0 2rem" }} item xs={12} sm={6} md={4}>
+          <Grid sx={{ margin: "0 2rem" }}>
             <Typography
               variant="h5"
               align="center"
@@ -185,7 +187,7 @@ const Home: React.FC = () => {
             <List
               sx={{
                 display: "grid",
-               gridTemplateColumns: "repeat(auto-fit, minmax(50px, 1fr))",
+                gridTemplateColumns: "repeat(auto-fit, minmax(50px, 1fr))",
                 gap: "1rem",
                 justifyContent: "center",
                 alignItems: "center",

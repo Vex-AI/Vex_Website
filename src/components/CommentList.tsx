@@ -1,4 +1,11 @@
-import { useState, useEffect, ChangeEvent, useContext,lazy, Suspense } from "react";
+import {
+  useState,
+  useEffect,
+  ChangeEvent,
+  useContext,
+  lazy,
+  Suspense,
+} from "react";
 import SendIcon from "@mui/icons-material/Send";
 import {
   Box,
@@ -87,7 +94,7 @@ const CommentList: React.FC = () => {
   };
 
   return (
-    <Box sx={{ margin: "0 16px" }}>
+    <Box sx={{ margin: "0 15vw" }}>
       <Suspense fallback={<Loader />}>
         <List>
           {submittedComments.map((comment: CommentData, index: number) => (

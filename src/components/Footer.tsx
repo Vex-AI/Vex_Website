@@ -3,9 +3,8 @@ import { Box, Typography, Avatar, Link } from "@mui/material";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 const Footer = () => {
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState<any[any]>([]);
   const { t } = useTranslation();
-
   useEffect(() => {
     fetch("https://api.github.com/users/cookieukw")
       .then((response) => response.json())
@@ -13,7 +12,7 @@ const Footer = () => {
       .catch((error) => console.log(error));
   }, []);
 
-  if (!userData) {
+  if (userData.length === 0) {
     return null;
   }
 
@@ -28,15 +27,13 @@ const Footer = () => {
       <Box sx={{ backgroundColor: "#212121", py: 4, px: 2 }}>
         <Box
           sx={{
-            display: "display",
+            display: "flex",
             alignItems: "center",
             justifyContent: "center",
+            marginTop: 1,
           }}
         >
-          <Avatar
-          src={avatar_url}
-          alt={name} 
-          sx={{ marginRight: 2 }} />
+          <Avatar src={avatar_url} alt={name} sx={{ marginRight: 2 }} />
           <Typography variant="body1" sx={{ color: "#fff" }}>
             {t("developedBy")}
             <Link

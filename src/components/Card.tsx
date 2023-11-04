@@ -1,20 +1,6 @@
 import { useCallback } from "react";
-import { Paper, Typography, Button, Avatar } from "@mui/material";
-import { GitHub as GitHubIcon } from "@mui/icons-material";
+import { Paper, Typography, Avatar } from "@mui/material";
 import { motion } from "framer-motion";
-import { createTheme } from "@mui/material/styles";
-import { ThemeProvider } from "@mui/material/styles";
-
-const allTheme = createTheme({
-  palette: {
-    primary: {
-      main: "#fff",
-    },
-    secondary: {
-      main: "#fff",
-    },
-  },
-});
 
 interface CardProps {
   name: string;
@@ -54,8 +40,8 @@ const Card: React.FC<CardProps> = ({ name, avatarUrl, githubUrl }) => {
           alt={name}
           src={avatarUrl}
           sx={{
-            width: 20,
-            height: 20,
+            width: 50,
+            height: 50,
             borderRadius: "3px",
           }}
         />
@@ -65,9 +51,10 @@ const Card: React.FC<CardProps> = ({ name, avatarUrl, githubUrl }) => {
           gutterBottom
           sx={{
             color: "#fff",
-            fontSize: "3px",
+            fontSize: "15px",
             width: "40px",
             wordBreak: "break-all",
+            textAlign: "center",
           }}
         >
           {name}

@@ -8,7 +8,7 @@
       content="width=device-width, initial-scale=1.0,user-scalable=0"
     />
     <title>Download VexAI</title>
-    <script type="module" crossorigin src="/assets/index-84cdf52f.js"></script>
+    <script type="module" crossorigin src="/assets/index-6ed09268.js"></script>
     <link rel="stylesheet" href="/assets/index-63468f17.css">
   </head>
   <body>
@@ -18,9 +18,19 @@
       script.src = "//cdn.jsdelivr.net/npm/eruda";
       document.body.appendChild(script);
       script.onload = function () {
-        eruda.init();
+        if (
+          navigator.userAgentData.mobile &&
+          window.location.hostname === "localhost"
+        ) {
+          eruda.init();
+        }
       };
     </script>
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3239733554197124"
+      crossorigin="anonymous"
+    ></script>
     
   </body>
 </html>
