@@ -29,6 +29,7 @@ import { Download as DownloadIcon } from "@mui/icons-material";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { UserContext } from "../components/UserContext";
+import axios from "axios";
 
 const theme = createTheme({
   palette: {
@@ -63,7 +64,8 @@ const Home: React.FC = () => {
   const { t } = useTranslation();
   const { locale } = useParams<{ locale: string }>();
   const [developers, setDevelopers] = useState<Dev[]>([]);
-
+  const [artifactAPKLink, setArtifactAPKLink] = useState("");
+  const [artifactAABLink, setArtifactAABLink] = useState("");
   const openUrl = useCallback((url: string) => {
     window.open(url, "_blank");
   }, []);
@@ -96,6 +98,41 @@ const Home: React.FC = () => {
     }
   }, [developers]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const releaseResponse = await axios.get(
+          "https://api.github.com/repos/Vex-AI/VexAI/releases/latest"
+        );
+        const latestReleaseId = releaseResponse.data.id;
+        const assetsResponse = await axios.get(
+          `https://api.github.com/repos/Vex-AI/VexAI/releases/${latestReleaseId}/assets`
+        );
+        const artifactAPK = assetsResponse.data.find(
+          (asset: any) => asset.name === "app-release-signed.apk"
+        );
+        const artifactAAB = assetsResponse.data.find(
+          (asset: any) => asset.name === "app-release-signed.aab"
+        );
+
+        if (artifactAPK) {
+          setArtifactAPKLink(artifactAPK.browser_download_url);
+          console.log("Artefato APK encontrado.");
+        } else console.log("Artefato APK não encontrado.")
+       
+        if (artifactAAB) {
+          setArtifactAABLink(artifactAAB.browser_download_url);
+          console.log("Artefato AAB encontrado.");
+        } else console.log("Artefato AAB não encontrado.");
+      
+
+      } catch (error) {
+        console.log("Erro ao obter informações do GitHub:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -165,7 +202,7 @@ const Home: React.FC = () => {
               </Button>
               <Button
                 onClick={() => {
-                  openUrl("https://github.com/Vex-AI/VexAI_Java/releases");
+                  openUrl(artifactAPKLink);
                 }}
                 variant="outlined"
                 color="primary"
@@ -211,7 +248,6 @@ const Home: React.FC = () => {
         </Suspense>
         {!user && (
           <Suspense fallback={<Loader />}>
-            {" "}
             <Login />
           </Suspense>
         )}

@@ -47,7 +47,7 @@ const Login: React.FC = () => {
             borderSizing: "border-box",
             flexDirection: "column",
             alignItems: "center",
-            margin: "2rem 1rem",
+            margin: "2rem 20%",
             paddingBottom: "2rem",
           }}
         >
