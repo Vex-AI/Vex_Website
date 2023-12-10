@@ -21,7 +21,7 @@ const AvatarContainer = styled(Box)(({ theme }) => ({
   marginBottom: theme.spacing(2),
 }));
 
-const StyledAvatar = styled(Avatar) ({
+const StyledAvatar = styled(Avatar)({
   width: 120,
   height: 120,
   borderRadius: "9px",
@@ -41,10 +41,11 @@ const DrawerComponent: React.FC<DrawerComponentProps> = ({ open, onClose }) => {
           <StyledAvatar
             src={
               user
-                ? user.photoURL
-                : "https://github.com/Vex-AI/VexAI/raw/main/public/Vex_320.png"
+                ? user.photoURL ??
+                  "https://github.com/Vex-AI/VexAI/raw/main/public/Vex_320.png"
+                : ""
             }
-            alt={user ? user.displayName : "Guest"}
+            alt={user ? user.displayName || "Guest" : ""}
           />
         </AvatarContainer>
         <Typography variant="h6" sx={{ marginBottom: "12px" }}>

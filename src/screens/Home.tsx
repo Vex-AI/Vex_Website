@@ -5,7 +5,8 @@ import {
   useMemo,
   lazy,
   Suspense,
-} from "react"; 
+  useContext,
+} from "react";
 
 import {
   Box,
@@ -27,6 +28,7 @@ const Login = lazy(() => import("../components/Login"));
 import { Download as DownloadIcon } from "@mui/icons-material";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { UserContext } from "../components/UserContext";
 
 const theme = createTheme({
   palette: {
@@ -57,6 +59,7 @@ interface Dev {
 }
 import i18n from "../classes/translation";
 const Home: React.FC = () => {
+  const { user } = useContext(UserContext);
   const { t } = useTranslation();
   const { locale } = useParams<{ locale: string }>();
   const [developers, setDevelopers] = useState<Dev[]>([]);
@@ -206,9 +209,12 @@ const Home: React.FC = () => {
         <Suspense fallback={<Loader />}>
           <CommentList />
         </Suspense>
-        <Suspense fallback={<Loader />}>
-          <Login />
-        </Suspense>
+        {!user && (
+          <Suspense fallback={<Loader />}>
+            {" "}
+            <Login />
+          </Suspense>
+        )}
       </Box>
 
       <ins

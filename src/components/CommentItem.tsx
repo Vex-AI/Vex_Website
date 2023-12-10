@@ -45,7 +45,8 @@ const CommentItem: React.FC<CommentProps> = ({ comment }) => {
     <motion.div
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: 0.2*comment.index }}
+      transition={{ duration: 0.5, delay: 0.2 * comment.index }}
+      exit={{ opacity: 0, y: -10 }}
     >
       <Container>
         <ListItem>
@@ -58,7 +59,12 @@ const CommentItem: React.FC<CommentProps> = ({ comment }) => {
               secondary={`${day}/${month}/${year}`}
             />
             <Rating value={stars} readOnly />
-            <Typography variant="body2">{content}</Typography>
+            <Typography
+              sx={{ transition: " heigh 0.3s ease-in-out" }}
+              variant="body2"
+            >
+              {content}
+            </Typography>
           </Content>
         </ListItem>
       </Container>

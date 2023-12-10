@@ -15,11 +15,10 @@ import {
   Button,
   List,
 } from "@mui/material";
-import { reference } from "../classes/firebase";
-import { DataSnapshot, onValue, off, push, set } from "firebase/database";
+import { database } from "../classes/firebase";
+import { DataSnapshot, onValue, off, set, ref } from "firebase/database";
 import { UserContext } from "./UserContext";
 const Loader = lazy(() => import("./Loader"));
-import { v4 } from "uuid";
 import CommentItem from "./CommentItem";
 
 interface CommentData {
@@ -38,29 +37,6 @@ const CommentList: React.FC = () => {
   const [newRating, setNewRating] = useState<number>(0);
   const [submittedComments, setSubmittedComments] = useState<CommentData[]>([]);
 
-  useEffect(() => {
-    onValue(reference, (snapshot: DataSnapshot) => {
-      const newData: CommentData[] = [];
-      snapshot.forEach((el: any) => {
-        const { name, profile, timestamp, stars, content, uid }: CommentData =
-          el.val();
-        newData.push({
-          name,
-          profile,
-          timestamp,
-          stars,
-          content,
-          uid,
-        });
-      });
-      setSubmittedComments(newData);
-    });
-
-    return () => {
-      off(reference);
-    };
-  }, []);
-
   const handleCommentChange = (event: ChangeEvent<HTMLInputElement>) => {
     setNewComment(event.target.value);
   };
@@ -75,23 +51,72 @@ const CommentList: React.FC = () => {
   };
 
   const handleSubmitComment = () => {
+    if (!user) return;
     if (newComment && user) {
       const newCommentData: CommentData = {
-        name: user.displayName,
-        profile: user.photoURL,
+        name: user.displayName ?? "",
+        profile: user.photoURL ?? "",
         timestamp: Date.now(),
         stars: newRating,
         content: newComment,
-        uid: v4(),
+        uid: user.uid ?? "",
       };
 
-      const newCommentRef = push(reference);
+      const newCommentRef = ref(database, `comments/${user.uid}`);
       set(newCommentRef, newCommentData);
-
-      setNewComment("");
-      setNewRating(0);
     }
   };
+
+
+  useEffect(() => {
+    const commentsRef = ref(database, "comments");
+
+    onValue(commentsRef, (snapshot: DataSnapshot) => {
+      const newData: CommentData[] = [];
+      snapshot.forEach((childSnapshot) => {
+        const { name, profile, timestamp, stars, content, uid }: CommentData =
+          childSnapshot.val();
+        newData.push({
+          name,
+          profile,
+          timestamp,
+          stars,
+          content,
+          uid,
+        });
+      });
+
+      setSubmittedComments(newData);
+      if (user) {
+        const userComment = newData.find((comment) => comment.uid === user.uid);
+
+        if (userComment) {
+          setNewRating(userComment.stars);
+          setNewComment(userComment.content);
+        }
+      }
+    });
+
+    return () => {
+      off(commentsRef);
+    };
+  }, [user]);
+
+  /*useEffect(() => {
+    const userCommentsRef = ref(database, `comments/${user?.uid}`);
+    onValue(userCommentsRef, (snapshot: DataSnapshot) => {
+      const userComment = snapshot.val();
+      if (userComment) {
+        setNewRating(userComment.stars);
+        setNewComment(userComment.content);
+      }
+    });
+    
+    return () => {
+      off(userCommentsRef);
+    };
+  }, [submittedComments]);
+  */
 
   return (
     <Box sx={{ margin: "0 15vw" }}>

@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useEffect, useState } from "react";
 import {
   getAuth,
   signInWithPopup,
@@ -8,9 +8,10 @@ import {
 import { app } from "../classes/firebase";
 
 interface UserInfo {
-  displayName: string;
-  email: string;
-  photoURL: string;
+  displayName: string | null;
+  email: string | null;
+  photoURL: string | null;
+  uid: string | null;
 }
 
 interface UserContextType {
@@ -34,19 +35,20 @@ const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<UserInfo | null>(null);
 
   const signInGoogle = () => {
-    
     signInWithPopup(auth, provider)
-      .then((result:any) => {
+      .then((result: any) => {
         const user = result.user;
+
         if (user) {
-          const {
-            displayName,
-          email,
-          photoURL} = user;
-          setUser({ displayName, email, photoURL });
+          const { displayName, email, photoURL, uid } = user;
+          setUser({ displayName, email, photoURL, uid });
+
+          user.getIdToken().then((token: any) => {
+            localStorage.setItem("authToken", token);
+          });
         }
       })
-      .catch((error:any) =>  {
+      .catch((error: any) => {
         console.log("Erro ao fazer login:", error);
       });
   };
@@ -55,11 +57,25 @@ const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     signOut(auth)
       .then(() => {
         setUser(null);
+        localStorage.removeItem("authToken");
       })
-      .catch((error:any) => {
+      .catch((error: any) => {
         console.log("Erro ao fazer logout:", error);
       });
   };
+
+  useEffect(() => {
+    const authToken = localStorage.getItem("authToken");
+
+    if (authToken) {
+      auth.onAuthStateChanged((user) => {
+        if (user) {
+          const { displayName, email, photoURL, uid } = user;
+          setUser({ displayName, email, photoURL, uid });
+        }
+      });
+    }
+  }, []);
 
   return (
     <UserContext.Provider value={{ user, setUser, logOutGoogle, signInGoogle }}>
