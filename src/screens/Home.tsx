@@ -118,14 +118,12 @@ const Home: React.FC = () => {
         if (artifactAPK) {
           setArtifactAPKLink(artifactAPK.browser_download_url);
           console.log("Artefato APK encontrado.");
-        } else console.log("Artefato APK não encontrado.")
-       
+        } else console.log("Artefato APK não encontrado.");
+
         if (artifactAAB) {
           setArtifactAABLink(artifactAAB.browser_download_url);
           console.log("Artefato AAB encontrado.");
         } else console.log("Artefato AAB não encontrado.");
-      
-
       } catch (error) {
         console.log("Erro ao obter informações do GitHub:", error);
       }
@@ -210,7 +208,19 @@ const Home: React.FC = () => {
                 fullWidth
                 sx={{ my: 2 }}
               >
-                {t("downloadApp")}
+                {t("downloadApp")}(APK)
+              </Button>
+              <Button
+                onClick={() => {
+                  openUrl(artifactAABLink);
+                }}
+                variant="outlined"
+                color="primary"
+                startIcon={<DownloadIcon />}
+                fullWidth
+                sx={{ my: 2 }}
+              >
+                {t("downloadApp")}(AAB)
               </Button>
             </motion.div>
           </Grid>
