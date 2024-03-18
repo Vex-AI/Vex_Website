@@ -1,8 +1,8 @@
 {
-  "aboutProject": "SOBRE O PROJETO",
+  "aboutProject": "Vex IA",
   "description": "Essa é uma IA que venho construindo desde 2019. Era um app Android feito em Java. \n\nTive muitos problemas para implementar funcionalidades, principalmente aprendizado de máquina e problemas com a play store (demorava para crescer, política e tal). \n\nEntão um dia resolvi criar uma versão com React e NodeJS (ainda está em construção), com o objetivo de criar uma IA capaz de ter uma conversa normal com uma pessoa e falar sobre jogos e vários assuntos... e quem sabe... virar uma IA consciente (⊙_⊙)",
   "visitOnlineVersion": "Visitar versão online",
-  "downloadApp": "BAIXAR APP",
+  "downloadApp": "Baixar",
   "developersContributors": "Desenvolvedores e Contribuidores",
   "comments": "Comentários",
   "loginToComment": "Faça login para comentar",

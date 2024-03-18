@@ -16,7 +16,6 @@ import {
   ThemeProvider,
   createTheme,
   CssBaseline,
-  List,
 } from "@mui/material";
 import { motion } from "framer-motion";
 import Header from "../components/Header";
@@ -60,6 +59,7 @@ interface Dev {
 }
 import i18n from "../classes/translation";
 const Home: React.FC = () => {
+  const [appVersion, setAppVersion] = useState<String>("...");
   const { user } = useContext(UserContext);
   const { t } = useTranslation();
   const { locale } = useParams<{ locale: string }>();
@@ -101,22 +101,23 @@ const Home: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const releaseResponse = await axios.get(
-          "https://api.github.com/repos/Vex-AI/VexAI/releases/latest"
+        const releaseResponse = (
+          await axios.get(
+            "https://api.github.com/repos/Vex-AI/VexAI/releases/latest"
+          )
+        ).data;
+        const assetsResponse = (await axios.get(releaseResponse.assets_url))
+          .data;
+        const artifactAPK = assetsResponse.find((asset: any) =>
+          asset.name.endsWith(".apk")
         );
-        const latestReleaseId = releaseResponse.data.id;
-        const assetsResponse = await axios.get(
-          `https://api.github.com/repos/Vex-AI/VexAI/releases/${latestReleaseId}/assets`
-        );
-        const artifactAPK = assetsResponse.data.find(
-          (asset: any) => asset.name === "app-release-signed.apk"
-        );
-        const artifactAAB = assetsResponse.data.find(
-          (asset: any) => asset.name === "app-release-signed.aab"
+        const artifactAAB = assetsResponse.find((asset: any) =>
+          asset.name.endsWith(".aab")
         );
 
         if (artifactAPK) {
           setArtifactAPKLink(artifactAPK.browser_download_url);
+          setAppVersion(releaseResponse.tag_name);
           console.log("Artefato APK encontrado.");
         } else console.log("Artefato APK não encontrado.");
 
@@ -143,7 +144,13 @@ const Home: React.FC = () => {
           paddingBottom: "3rem",
         }}
       >
-        <Grid container spacing={2} justifyContent="center" alignItems="center">
+        <Grid
+          sx={{ placeItems: "baseline", placeContent: "center" }}
+          container
+          spacing={2}
+          justifyContent="center"
+          alignItems="center"
+        >
           <Grid item xs={12} sm={6} md={4}>
             <motion.div
               initial={{ opacity: 0, y: 50 }}
@@ -208,7 +215,7 @@ const Home: React.FC = () => {
                 fullWidth
                 sx={{ my: 2 }}
               >
-                {t("downloadApp")}(APK)
+                {t("downloadApp")} APK({appVersion})
               </Button>
               <Button
                 onClick={() => {
@@ -220,32 +227,31 @@ const Home: React.FC = () => {
                 fullWidth
                 sx={{ my: 2 }}
               >
-                {t("downloadApp")}(AAB)
+                {t("downloadApp")} AAB({appVersion})
               </Button>
             </motion.div>
           </Grid>
-
-          <Grid sx={{ margin: "0 2rem" }}>
+          <Grid xs={12} sm={6} md={4} sx={{ minHeight: "100%" }}>
             <Typography
               variant="h5"
               align="center"
               gutterBottom
-              sx={{ mt: 2, marginTop: "2rem" }}
+              sx={{ mt: 2, marginTop: "2rem", padding: "0 20px" }}
             >
               {t("developersContributors")}
             </Typography>
-            <List
+
+            <Box
               sx={{
                 display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(50px, 1fr))",
+                gridTemplateColumns: "repeat(auto-fit, minmax(60px, 1fr))",
                 gap: "1rem",
-                justifyContent: "center",
-                alignItems: "center",
                 marginTop: "1rem",
+                placeItems: "center",
               }}
             >
               {renderDevelopers}
-            </List>
+            </Box>
           </Grid>
         </Grid>
       </Box>
