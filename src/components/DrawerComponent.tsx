@@ -18,7 +18,7 @@ const DrawerComponent: React.FC<{ open: boolean; onClose: () => void }> = ({
                 role="presentation"
                 onClick={onClose}
                 onKeyDown={onClose}
-                style={{ width: 250, padding: 20 }}
+                style={{ width: 250, height:250, padding: 20 }}
             >
                 {/* Imagem e Nome */}
                 <div style={{ textAlign: "center", marginBottom: 20 }}>
