@@ -32,7 +32,7 @@ const DrawerComponent: React.FC<{ open: boolean; onClose: () => void }> = ({
                         style={{
                             width: "100%",
                             height: "auto",
-                            borderRadius: 0, // Remove borda circular
+                            borderRadius: 0
                         }}
                     />
                     <Typography variant="h6" style={{ marginTop: 10 }}>

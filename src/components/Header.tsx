@@ -12,10 +12,9 @@ const Header: React.FC<HeaderProps> = ({ toggleDrawer }) => {
                 <IconButton
                     edge="start"
                     color="inherit"
-                    onClick={() => {
-                        toggleDrawer();
-                        console.log("click bar");
-                    }}
+                    onClick={toggleDrawer}
+                        
+                    
                     sx={{ mr: 2 }}
                 >
                     <MenuIcon />
