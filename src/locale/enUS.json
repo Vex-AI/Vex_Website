@@ -1,12 +1,15 @@
 {
-  "aboutProject": "VEX AI",
-  "description": "This is an AI I've been building since 2019. It was an Android app made in Java. I had a lot of problems implementing features, mainly machine learning and problems with the play store (it took time to grow, politics and such). So one day I decided to create a version with React and NodeJS (so it's still under construction), with the aim of creating an AI capable of havinga normal conversation with a person and talking about games andvarious subjects... and who knows... becoming a conscious AI (⊙_⊙)",
-  "visitOnlineVersion": "Visit online version",
-  "downloadApp": "Download",
-  "developersContributors": "Developers & Contributors",
-  "comments": "Comments",
-  "loginToComment": "Log in to comment",
-  "enter": "ENTER",
-  "developedBy": "Developed by ",
-  "allRights": "All rights reserved."
+    "aboutProject": "VEX AI",
+    "description": "This is an AI I've been building since 2019. It was an Android app made in Java. I had a lot of problems implementing features, mainly machine learning and problems with the play store (it took time to grow, politics and such). So one day I decided to create a version with React and NodeJS (so it's still under construction), with the aim of creating an AI capable of havinga normal conversation with a person and talking about games andvarious subjects... and who knows... becoming a conscious AI (⊙_⊙)",
+    "visitOnlineVersion": "Visit online version",
+    "downloadApp": "Download",
+    "developersContributors": "Developers & Contributors",
+    "comments": "Comments",
+    "loginToComment": "Log in to comment",
+    "enter": "ENTER",
+    "developedBy": "Developed by ",
+    "allRights": "All rights reserved.",
+    "rateApp": "Rate the app",
+    "enterComment": "Enter your comment...",
+    "submitComment":"Enviar comentário"
 }
