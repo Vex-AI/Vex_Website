@@ -256,14 +256,19 @@ const Home: React.FC = () => {
                             >
                                 {t("downloadApp")} AAB({appVersion})
                             </Button>
-                            <GooglePlayButton
+                           <div style={{
+                             
+                display:"flex"   ,
+                alignItems:"center",
+                justifyContent:"center"
+                           }}> <GooglePlayButton
         url={"https://play.google.com/store/apps/details?id=com.cookieukw.vex"}
         theme={"dark"}
 
 
-        className={"custom-style"}
+        
       
-      />
+      /></div>
                         </Box>
                     </Grid>
                     <Grid item xs={12} sm={6} md={4}>
