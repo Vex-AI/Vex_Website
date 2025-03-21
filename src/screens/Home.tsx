@@ -23,6 +23,7 @@ import axios from "axios";
 import i18n from "../classes/translation";
 import { useDeveloperStore } from "../store/developerStore";
 import { useUserStore } from "../store/userStore";
+import { GooglePlayButton } from "react-mobile-app-button";
 
 const theme = createTheme({
     palette: {
@@ -255,6 +256,14 @@ const Home: React.FC = () => {
                             >
                                 {t("downloadApp")} AAB({appVersion})
                             </Button>
+                            <GooglePlayButton
+        url={"https://play.google.com/store/apps/details?id=com.cookieukw.vex"}
+        theme={"dark"}
+
+
+        className={"custom-style"}
+      
+      />
                         </Box>
                     </Grid>
                     <Grid item xs={12} sm={6} md={4}>
